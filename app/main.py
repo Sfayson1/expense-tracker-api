@@ -1,11 +1,20 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI(title="Expense Tracker API")
+from app.routers import auth, expenses
 
-@app.get("/")
-def root():
-    return {"ok": True, "service": "Expense Tracker API"}
+app = FastAPI(
+    title="Expense Tracker API",
+    version="1.0.0"
+)
 
-@app.get("/status")
-def status():
-    return {"message": "API is up and running!"}
+app.include_router(auth.router, prefix="/auth", tags=["Auth"])
+app.include_router(expenses.router, prefix="/expenses", tags=["Expenses"])
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
