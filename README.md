@@ -49,10 +49,10 @@ Built with FastAPI, PostgreSQL, SQLAlchemy, & JWT authentication.
 ## 🚀 Local Setup
 
 ### Clone
-\`\`\`bash
+```bash
 git clone https://github.com/Sfayson1/expense-tracker-api.git
 cd expense-tracker-api
-\`\`\`
+```
 
 ### Create Virtual Env & Install Dependencies
 \`\`\`bash
