@@ -1,8 +1,9 @@
 import os, jwt
 from passlib.context import CryptContext
 from datetime import datetime, timedelta
+from jwt import InvalidTokenError, ExpiredSignatureError
 
-pwd = CryptContext(schemes=["argon2"], deprecated="auto")  
+pwd = CryptContext(schemes=["argon2"], deprecated="auto")
 
 JWT_SECRET = os.getenv("JWT_SECRET", "change-me")
 JWT_ALG = os.getenv("JWT_ALG", "HS256")
@@ -20,5 +21,10 @@ def create_token(user_id: int) -> str:
     return jwt.encode(payload, JWT_SECRET, algorithm=JWT_ALG)
 
 def decode_token(t: str) -> int:
-    data = jwt.decode(t, JWT_SECRET, algorithms=[JWT_ALG])
-    return int(data["sub"])
+    try:
+        data = jwt.decode(t, JWT_SECRET, algorithms=[JWT_ALG])
+        return int(data["sub"])
+    except ExpiredSignatureError:
+        raise InvalidTokenError("Token has expired")
+    except InvalidTokenError:
+        raise InvalidTokenError("Invalid token")
