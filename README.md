@@ -55,34 +55,34 @@ cd expense-tracker-api
 ```
 
 ### Create Virtual Env & Install Dependencies
-\`\`\`bash
+```bash
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-\`\`\`
+```
 
 ### Environment Variables
 Create `.env`:
-\`\`\`
+```
 DATABASE_URL=postgresql://localhost/expenses_dev
 JWT_SECRET=change-me
 JWT_ALG=HS256
 JWT_EXPIRE_MIN=1440
-\`\`\`
+```
 
 ### Initialize the DB
-\`\`\`bash
+```bash
 python3 - <<EOF2
 from app.db.session import Base, engine
 import app.models
 Base.metadata.create_all(bind=engine)
 EOF2
-\`\`\`
+```
 
 ### Run the Server
-\`\`\`bash
+```bash
 uvicorn app.main:app --reload
-\`\`\`
+```
 
 Docs: http://127.0.0.1:8000/docs
 
