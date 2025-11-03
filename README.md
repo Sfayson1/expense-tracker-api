@@ -7,20 +7,21 @@ Built with FastAPI, PostgreSQL, SQLAlchemy, & JWT authentication.
 
 ## ✅ Features
 
-| Feature | Status |
-|--------|:-----:|
-| User registration & login | ✅ |
-| JWT Authentication | ✅ |
-| Create, Read, Update, Delete (CRUD) expenses | ✅ |
-| Filtering by category + month | ✅ |
-| Pagination support | ✅ |
-| Secure password hashing (Argon2) | ✅ |
-| PostgreSQL with Alembic migrations | ✅ |
-| Swagger Docs | ✅ |
-| Cascade delete when user is removed | ✅ |
-| Sorting (newest first) | ✅ |
-| Analytics endpoints | 🔜 |
-| Frontend dashboard | 🔜 Future |
+| Feature                                               |   Status  |
+| ----------------------------------------------------- | :-------: |
+| User registration & login                             |     ✅     |
+| JWT authentication                                    |     ✅     |
+| Create / list / update / delete expenses              |     ✅     |
+| PostgreSQL + SQLAlchemy ORM                           |     ✅     |
+| Argon2 password hashing                               |     ✅     |
+| Swagger API docs (`/docs`)                            |     ✅     |
+| Filtering expenses (category, search, amounts, dates) |     ✅     |
+| Sorting + Pagination with total count                 |     ✅     |
+| Stats endpoints (monthly summary & totals by month)   |     ✅     |
+| Database migrations (Alembic)                         |     ✅     |
+| Composite indexes for performance                     |     ✅     |
+| Frontend dashboard                                    | 🔜 Future |
+
 
 ---
 
@@ -57,10 +58,17 @@ Built with FastAPI, PostgreSQL, SQLAlchemy, & JWT authentication.
 | `PUT` | `/expenses/{id}` | Update expense | ✅ |
 | `DELETE` | `/expenses/{id}` | Delete expense | ✅ |
 
-✅ Filters available:
-- `?category=grocery`
-- `?month=2025-11`
-- `?limit=50&offset=0`
+### 🔎 Filters on /expenses/:
+```bash
+/expenses/?category=food&q=grocery&min_amount=5&max_amount=50
+/date_from=2025-01-01&date_to=2025-02-01
+/month=2025-11&sort=amount&order=asc&limit=20&offset=0
+```
+
+### 📈 Stats
+Method	Endpoint	Returns
+GET	/expenses/stats/summary?month=YYYY-MM	Total, avg, by-category breakdown
+GET	/expenses/stats/by-month?year=YYYY	Monthly totals for charting
 
 ---
 
@@ -113,15 +121,12 @@ uvicorn app.main:app --reload
 Docs: http://127.0.0.1:8000/docs
 
 ---
-## 📅 Roadmap Progress
+## 📅 Roadmap
 
-| Day    | Milestone                           | Status |
-| ------ | ----------------------------------- | :----: |
-| Day 1  | Setup + Register/Login              |    ✅   |
-| Day 2  | CRUD + Auth everywhere              |    ✅   |
-| Day 3  | Migrations + Filtering + Pagination |    ✅   |
-| Day 4  | Analytics endpoints + tests         |   🔜   |
-| Future | Dashboard UI + Deployment           |   🔜   |
+✅ Day 4 Complete: Filtering + Pagination + Stats + Indexes
+🔜 Day 5: React Dashboard UI
+🔜 Day 6: Docker + Deployment
+✨ Future: Authentication UI, charts, category icons, budgeting tips
 
 
 ## 🧑‍💻 Author

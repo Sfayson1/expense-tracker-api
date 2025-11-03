@@ -9,6 +9,8 @@ class User(Base):
     email = Column(String(255), unique=True, index=True, nullable=False)
     hashed_password = Column(String(255), nullable=False)
 
+    expenses = relationship("Expense", back_populates="user", cascade="all, delete")
+
 class Expense(Base):
     __tablename__ = "expenses"
     id = Column(Integer, primary_key=True, index=True)
@@ -18,4 +20,8 @@ class Expense(Base):
     note = Column(String(255))
     created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False, index=True)
     updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False)
-    user = relationship("User")
+
+    user = relationship("User", back_populates="expenses")
+
+Index("ix_expenses_user_created_at", Expense.user_id, Expense.created_at.desc())
+Index("ix_expenses_user_category", Expense.user_id, Expense.category)
