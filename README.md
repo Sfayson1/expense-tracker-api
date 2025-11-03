@@ -78,6 +78,14 @@ import app.models
 Base.metadata.create_all(bind=engine)
 EOF2
 ```
+### Alembic Migrations
+```bash
+# Create migration after schema changes
+alembic revision --autogenerate -m "describe change"
+
+# Apply migration
+alembic upgrade head
+```
 
 ### Run the Server
 ```bash
@@ -88,14 +96,54 @@ Docs: http://127.0.0.1:8000/docs
 
 ---
 
-## 📅 Roadmap
+### 📌 API Endpoints
+#### 🔑 Authentication (/auth)
+Method	Endpoint	Description
+POST	/auth/register	Create user
+POST	/auth/login	Login → returns JWT
 
-✅ Done: Auth + Expense CRUD + PostgreSQL  
-🔜 Day 3: Update/Delete + Alembic Migrations  
-🔜 Future: Filtering + Analytics + Dashboard UI
+#### 💰 Expenses (/expenses)
+Method	Endpoint	Description
+GET	/expenses/	List user expenses (with filters + pagination)
+POST	/expenses/	Create new expense
+PUT	/expenses/{id}	Update user’s expense
+DELETE	/expenses/{id}	Delete user’s expense
+
+### 🔍 Filters
+Query Param	Example	Meaning
+category	?category=food	Filter by category
+month	?month=2025-11	Only expenses from November 2025
+limit	?limit=25	Pagination size
+offset	?offset=25	Skip records
+
+### ✅ Day 4 Preview
+
+Next step in your backend mastery:
+
+#### 🚀 Add Budget Goals:
+
+* POST /goals/
+* GET /goals/summary
+* Automatically calculate month spend vs. goal
+
+#### 👤 Add Users API scope:
+
+* GET /auth/me for profile
+* Ability to update email/password
+
+#### 📊 Data Visualization API:
+
+* Spend by category chart
+* Monthly trend chart
+
+### ⭐️ Future Plans
+
+✅ Deploy to the cloud (Railway, Render, Vercel)
+✅ Add testing (pytest)
+✅ Add receipts with file uploads
+✅ Full frontend UI (React)
 
 ---
 
 ## 🧑‍💻 Author
 Sherika Fayson — Aspiring Backend & Data Engineer
-

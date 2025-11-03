@@ -1,5 +1,5 @@
 from datetime import datetime
-from sqlalchemy import Column, Integer, String, Numeric, DateTime, ForeignKey, Float, Index, UniqueConstraint
+from sqlalchemy import Column, Integer, String, Float, ForeignKey, Index, UniqueConstraint, DateTime, func
 from sqlalchemy.orm import relationship
 from app.db.session import Base
 
@@ -16,5 +16,6 @@ class Expense(Base):
     category = Column(String(64), nullable=False, index=True)
     amount = Column(Float, nullable=False)
     note = Column(String(255))
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False, index=True)
+    updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False)
     user = relationship("User")
