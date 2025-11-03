@@ -221,3 +221,8 @@ __pycache__
 
 # SQLite (if used for testing)
 *.db
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+*pyo
