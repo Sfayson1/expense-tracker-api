@@ -6,43 +6,61 @@ Built with FastAPI, PostgreSQL, SQLAlchemy, & JWT authentication.
 > 🚧 Active learning project by Sherika Fayson — building skills for a backend → data engineering career path.
 
 ## ✅ Features
+
 | Feature | Status |
 |--------|:-----:|
-| User registration + login | ✅ |
+| User registration & login | ✅ |
 | JWT Authentication | ✅ |
-| Create & list expenses | ✅ |
+| Create, Read, Update, Delete (CRUD) expenses | ✅ |
+| Filtering by category + month | ✅ |
+| Pagination support | ✅ |
 | Secure password hashing (Argon2) | ✅ |
-| PostgreSQL database | ✅ |
-| Swagger API docs (/docs) | ✅ |
-| Update/Delete expenses | 🔜 |
-| Migrations via Alembic | 🔜 |
-| Filtering + sorting expenses | 🔜 |
+| PostgreSQL with Alembic migrations | ✅ |
+| Swagger Docs | ✅ |
+| Cascade delete when user is removed | ✅ |
+| Sorting (newest first) | ✅ |
+| Analytics endpoints | 🔜 |
 | Frontend dashboard | 🔜 Future |
 
-## 🏗️ Tech Stack
+---
+
+## 🏗 Tech Stack
+
 | Layer | Technology |
-|------|------------|
+|-------|------------|
 | Backend Framework | FastAPI |
 | Database | PostgreSQL |
 | ORM | SQLAlchemy |
-| Validation | Pydantic v2 |
-| Auth | JWT + Argon2 hashing |
-| Docs | Swagger (OpenAPI) |
+| Migrations | Alembic |
+| Auth | JWT + OAuth2 scheme |
+| Password Security | Argon2 hashing |
+| Serialization | Pydantic v2 |
+| Docs | OpenAPI / Swagger UI |
 
+---
 
 ## 🧪 API Endpoints
 
-### Auth
-| Method | Endpoint | Description | Auth Required |
-|--------|----------|-------------|:------------:|
-| POST | /auth/register | Create a new user | ❌ |
-| POST | /auth/login | Get access token | ❌ |
+### 🔐 Auth
 
-### Expenses
-| Method | Endpoint | Description | Auth Required |
-|--------|----------|-------------|:------------:|
-| GET | /expenses/ | List user’s expenses | ✅ |
-| POST | /expenses/ | Create an expense | ✅ |
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|:---:|
+| `POST` | `/auth/register` | Create new user | ❌ |
+| `POST` | `/auth/login` | Get a JWT token | ❌ |
+
+### 💸 Expenses
+
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|:---:|
+| `GET` | `/expenses/` | List user expenses (filter + paginate) | ✅ |
+| `POST` | `/expenses/` | Create expense | ✅ |
+| `PUT` | `/expenses/{id}` | Update expense | ✅ |
+| `DELETE` | `/expenses/{id}` | Delete expense | ✅ |
+
+✅ Filters available:
+- `?category=grocery`
+- `?month=2025-11`
+- `?limit=50&offset=0`
 
 ---
 
@@ -78,6 +96,14 @@ import app.models
 Base.metadata.create_all(bind=engine)
 EOF2
 ```
+### Alembic Migrations
+```bash
+# Create migration after schema changes
+alembic revision --autogenerate -m "describe change"
+
+# Apply migration
+alembic upgrade head
+```
 
 ### Run the Server
 ```bash
@@ -87,15 +113,16 @@ uvicorn app.main:app --reload
 Docs: http://127.0.0.1:8000/docs
 
 ---
+## 📅 Roadmap Progress
 
-## 📅 Roadmap
+| Day    | Milestone                           | Status |
+| ------ | ----------------------------------- | :----: |
+| Day 1  | Setup + Register/Login              |    ✅   |
+| Day 2  | CRUD + Auth everywhere              |    ✅   |
+| Day 3  | Migrations + Filtering + Pagination |    ✅   |
+| Day 4  | Analytics endpoints + tests         |   🔜   |
+| Future | Dashboard UI + Deployment           |   🔜   |
 
-✅ Done: Auth + Expense CRUD + PostgreSQL  
-🔜 Day 3: Update/Delete + Alembic Migrations  
-🔜 Future: Filtering + Analytics + Dashboard UI
-
----
 
 ## 🧑‍💻 Author
 Sherika Fayson — Aspiring Backend & Data Engineer
-

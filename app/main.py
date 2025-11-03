@@ -9,8 +9,8 @@ app = FastAPI(
     version="1.0.0"
 )
 
-app.include_router(auth.router, prefix="/auth", tags=["Auth"])
-app.include_router(expenses.router, prefix="/expenses", tags=["Expenses"])
+app.include_router(auth.router)
+app.include_router(expenses.router, prefix="/expenses", tags=["expenses"])
 
 app.add_middleware(
     CORSMiddleware,
