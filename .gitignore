@@ -226,7 +226,32 @@ __pycache__
 __pycache__/
 *.py[cod]
 *pyo
+<<<<<<< HEAD
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
+=======
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+
+# Envs
+.venv/
+env/
+venv/
+
+# IDE
+.vscode/
+.idea/
+
+# Alembic
+alembic/versions/*.pyc
+
+# dotenv
+.env
+*.pyc
+>>>>>>> 019c20e (chore: ignore .pyc files)
