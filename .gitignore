@@ -226,3 +226,7 @@ __pycache__
 __pycache__/
 *.py[cod]
 *pyo
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
